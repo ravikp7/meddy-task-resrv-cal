@@ -26,12 +26,24 @@ function App() {
               });
             }}
           />
-          <ConfirmStay dates={selectedDates} />
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+            }}
+          >
+            <span className={style.reservationHeading}>Add reservation</span>
+            <ConfirmStay dates={selectedDates} />
+          </div>
         </div>
         <div className={style.secondRow}>
-          {selectedDates.map(date => (
-            <CancelStay date={date} />
-          ))}
+          <span className={style.reservationHeading}>Reservations on Selected dates</span>
+          <div className={style.cancelGrid}>
+            {selectedDates.map(date => (
+              <CancelStay date={date} />
+            ))}
+          </div>
         </div>
       </div>
     </div>
