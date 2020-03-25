@@ -7,7 +7,7 @@
   height: 100vh;
 }
 
-.App-header {
+.AppHeader {
   background-color: #282c34;
   min-height: 8rem;
   width: 100%;
@@ -19,4 +19,23 @@
   color: white;
   position: fixed;
   top: 0;
+}
+
+.mainBody {
+  display: flex;
+  width: 70%;
+  height: 70%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.firstRow {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.secondRow {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
 }

@@ -1,0 +1,16 @@
+.button {
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 1.2rem;
+  height: 50px;
+  width: 100%;
+}
+
+.primary {
+  background-color: rgb(12, 155, 221);
+}
+
+.danger {
+  background-color: red;
+}
