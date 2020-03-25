@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import Calendar from './components/Calendar';
 import './App.css';
 
 function App() {
+  const [selectedDates, setDates] = useState([]);
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        Calendar Reserver
       </header>
+      <Calendar
+        selectedDates={selectedDates}
+        onDateChange={(date) => {
+          setDates(dates => {
+            if (dates.includes(date)) {
+              const dateIndex = dates.indexOf(date);
+              return [...dates.slice(0, dateIndex), ...dates.slice(dateIndex + 1, dates.length)];
+            }
+            return [...dates, date];
+          });
+        }}
+      /> 
     </div>
   );
 }

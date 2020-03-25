@@ -1,0 +1,57 @@
+.container {
+  height: 350px;
+  width: 380px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 3px 3px 20px rgba(0,0,0,0.3);
+  padding: 1.2rem 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.header {
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.navButton {
+  background: transparent;
+  border: none;
+  font-weight: bolder;
+  font-size: 2.5rem;
+}
+
+.dayButton {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  border-radius: 50%;
+  padding: 2px;
+  height: 2.4rem;
+  width: 2.4rem;
+}
+
+.selectedButton {
+  color: white;
+  background-color: rgb(12, 155, 221);
+}
+
+td {
+  width: calc(100%/7);
+}
+
+.calBody {
+  flex-grow: 1;
+}
+
+th {
+  font-size: 1.4rem;
+}
+
+.calTable {
+  width: 100%;
+  font-size: 1.5rem;
+  height: 100%;
+}
