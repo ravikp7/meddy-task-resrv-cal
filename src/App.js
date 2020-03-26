@@ -7,8 +7,8 @@ import { getStartOfMonth, getEndOfMonth } from './utils';
 import style from './App.module.css';
 
 const date = new Date();
-const startTime = getStartOfMonth(date);
-const endTime = getEndOfMonth(date);
+let startTime = getStartOfMonth(date);
+let endTime = getEndOfMonth(date);
 
 function App() {
   // This state takes care of currently showing month and year
@@ -57,10 +57,22 @@ function App() {
               });
             }}
             onPrevious={() => {
-              setMonth(month => new Date(new Date(month).setMonth(month.getMonth() - 1)));
+              setMonth(month => {
+                const newMonth = new Date(new Date(month).setMonth(month.getMonth() - 1));
+                if (getStartOfMonth(newMonth) < startTime) {
+                  startTime = getStartOfMonth(newMonth);
+                }
+                return newMonth;
+              });
             }}
             onNext={() => {
-              setMonth(month => new Date(new Date(month).setMonth(month.getMonth() + 1)));
+              setMonth(month => {
+                const newMonth = new Date(new Date(month).setMonth(month.getMonth() + 1));
+                if (getEndOfMonth(newMonth) > endTime) {
+                  endTime = getEndOfMonth(newMonth);
+                }
+                return newMonth;
+              });
             }}
           />
           <div
