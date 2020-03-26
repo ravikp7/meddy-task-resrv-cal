@@ -20,10 +20,19 @@ const ConfirmStay = ({ dates, onConfirm }) => {
         ></input>
       </label>
       <span>
-        Stay dates: 
+        Stay dates:
         {` ${dates.map(date => strftime('%b %d', new Date(date))).join(', ')}`}
       </span>
-      <Button onClick={onConfirm} text="Confirm Stay"></Button>
+      <Button
+        onClick={() => {
+          onConfirm(name).then(() => {
+            setName('');
+          }).catch(error => {
+            console.log(error);
+          })
+        }}
+        text="Confirm Stay"
+      ></Button>
     </div>
   );
 };

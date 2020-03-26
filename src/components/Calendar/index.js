@@ -4,9 +4,8 @@ import PropTypes from 'prop-types';
 import { getDays } from '../../utils';
 import style from './calendar.module.css';
 
-const Calendar = ({ onDateChange, selectedDates }) => {
-  // This state takes care of currently showing month and year
-  const [currentMonth, setMonth] = useState(new Date());
+const Calendar = ({ onDateChange, selectedDates, currentMonth, onNext, onPrevious }) => {
+  
   const daysInCurrentMonth = getDays(currentMonth);
   const offset = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1).getDay();
   const days = [...Array(daysInCurrentMonth + offset).keys()];
@@ -17,18 +16,14 @@ const Calendar = ({ onDateChange, selectedDates }) => {
       <div className={style.header}>
         <button
           className={style.navButton}
-          onClick={() => {
-            setMonth(month => new Date(new Date(month).setMonth(month.getMonth() - 1)));
-          }}
+          onClick={onPrevious}
         >
           {'<'}
         </button>
         <span>{strftime('%b %Y', currentMonth)}</span>
         <button
           className={style.navButton}
-          onClick={() => {
-            setMonth(month => new Date(new Date(month).setMonth(month.getMonth() + 1)));
-          }}
+          onClick={onNext}
         >
           {'>'}
         </button>

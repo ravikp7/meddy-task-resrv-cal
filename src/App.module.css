@@ -17,7 +17,7 @@
 }
 
 .AppHeader {
-  background-color: #282c34;
+  background-color: rgb(12, 155, 221);
   min-height: 8rem;
   width: 100%;
   display: flex;

@@ -21,4 +21,16 @@ const areDatesEqual = (date1, date2) => {
     && d1.getDate() === d2.getDate();
 }
 
-export { getDays, areDatesEqual };
+const getStartOfMonth = (date) => {
+  const d = new Date(date);
+  d.setHours(0,0,0,0);
+  return d.setDate(1);
+};
+
+const getEndOfMonth = (date) => {
+  const d = new Date(date);
+  d.setHours(23,59,59,999);
+  return d.setDate(getDays(d));
+};
+
+export { getDays, areDatesEqual, getStartOfMonth, getEndOfMonth };

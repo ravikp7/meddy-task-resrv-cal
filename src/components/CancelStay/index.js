@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import Button from '../Button';
 import style from './cancelStay.module.css';
 
-const CancelStay = ({ date, onCancel, tenantName }) => {
+const CancelStay = ({ date, onCancel, tennantName }) => {
   return (
     <div className={style.container}>
-        <span>Tenant Name: {tenantName}</span>
+        <span>Tenant Name: {tennantName}</span>
       <span>
         Stay date:
         {` ${strftime('%b %d', new Date(date))}`}
@@ -20,6 +20,7 @@ const CancelStay = ({ date, onCancel, tenantName }) => {
 CancelStay.propTypes = {
   dates: PropTypes.arrayOf(PropTypes.string).isRequired,
   onCancel: PropTypes.func.isRequired,
+  tennantName: PropTypes.string.isRequired,
 };
 
 export default CancelStay;
