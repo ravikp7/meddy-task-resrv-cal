@@ -3,6 +3,7 @@ import Calendar from './components/Calendar';
 import ConfirmStay from './components/ConfirmStay';
 import CancelStay from './components/CancelStay';
 import Loader from './components/Loader';
+import Modal from './components/Modal';
 import { getReservations, changeReservations } from './utils/api';
 import { getStartOfMonth, getEndOfMonth } from './utils';
 import style from './App.module.css';
@@ -17,6 +18,7 @@ function App() {
   const [selectedDates, setDates] = useState([]);
   const [reservations, setReservation] = useState([]);
   const [isLoading, setLoadStatus] = useState(false);
+  const [errorMsg, setError] = useState('');
   const selectedUnreservedDates = selectedDates.filter(
     date => !reservations.map(({ time }) => new Date(time).toDateString()).includes(date)
   );
@@ -30,7 +32,7 @@ function App() {
         setReservation(reserved);
       })
       .catch(error => {
-        console.log(error);
+        setError(String(error));
       });
   };
 
@@ -41,6 +43,21 @@ function App() {
   return (
     <div className={style.App}>
       <Loader isVisible={isLoading} />
+      <Modal
+        isVisible={errorMsg.length !== 0}
+        text={errorMsg}
+        onOk={async () => {
+          setError('');
+          setLoadStatus(true);
+          try {
+            await fetchReservations();
+            setLoadStatus(false);
+          } catch (error) {
+            console.log(error)
+            setError(String(error));
+          }
+        }}
+      />
       <header className={style.AppHeader}>Calendar Reserver</header>
       <div className={style.mainBody}>
         <div className={style.firstRow}>
@@ -106,6 +123,7 @@ function App() {
                 } catch (error) {
                   console.log(error);
                   setLoadStatus(false);
+                  setError(String(error));
                 }
                 return;
               }}
@@ -132,6 +150,7 @@ function App() {
                   } catch (error) {
                     console.log(error);
                     setLoadStatus(false);
+                    setError(String(error));
                   }
                 }}
               />

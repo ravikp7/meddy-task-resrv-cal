@@ -6,7 +6,8 @@ const getReservations = async ({ start, end }) => {
     if (response.ok) {
       return response.json();
     }
-    throw new Error(`Request failed with status code ${response.status}`);
+    const resText = await response.text();
+    throw resText;
   } catch (error) {
     throw new Error(error);
   }
@@ -26,7 +27,8 @@ const changeReservations = async (reservations) => {
     if (response.ok) {
       return response.json();
     }
-    throw new Error(`Request failed with status code ${response.status}`);
+    const resText = await response.text();
+    throw resText;
   } catch (error) {
     throw new Error(error);
   }
