@@ -25,11 +25,15 @@ const ConfirmStay = ({ dates, onConfirm }) => {
       </span>
       <Button
         onClick={() => {
-          onConfirm(name).then(() => {
-            setName('');
-          }).catch(error => {
-            console.log(error);
-          })
+          if (/[a-zA-Z]+/.test(name) && dates.length !== 0) {
+            onConfirm(name)
+              .then(() => {
+                setName('');
+              })
+              .catch(error => {
+                console.log(error);
+              });
+          }
         }}
         text="Confirm Stay"
       ></Button>

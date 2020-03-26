@@ -18,7 +18,7 @@ const CancelStay = ({ date, onCancel, tennantName }) => {
 };
 
 CancelStay.propTypes = {
-  dates: PropTypes.arrayOf(PropTypes.string).isRequired,
+  date: PropTypes.number.isRequired,
   onCancel: PropTypes.func.isRequired,
   tennantName: PropTypes.string.isRequired,
 };

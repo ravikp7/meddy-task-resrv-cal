@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Calendar from './components/Calendar';
 import ConfirmStay from './components/ConfirmStay';
 import CancelStay from './components/CancelStay';
+import Loader from './components/Loader';
 import { getReservations, changeReservations } from './utils/api';
 import { getStartOfMonth, getEndOfMonth } from './utils';
 import style from './App.module.css';
@@ -15,6 +16,7 @@ function App() {
   const [currentMonth, setMonth] = useState(new Date());
   const [selectedDates, setDates] = useState([]);
   const [reservations, setReservation] = useState([]);
+  const [isLoading, setLoadStatus] = useState(false);
   const selectedUnreservedDates = selectedDates.filter(
     date => !reservations.map(({ time }) => new Date(time).toDateString()).includes(date)
   );
@@ -23,7 +25,7 @@ function App() {
   );
 
   const fetchReservations = () => {
-    getReservations({ start: startTime, end: endTime })
+    return getReservations({ start: startTime, end: endTime })
       .then(({ reserved }) => {
         setReservation(reserved);
       })
@@ -38,6 +40,7 @@ function App() {
 
   return (
     <div className={style.App}>
+      <Loader isVisible={isLoading} />
       <header className={style.AppHeader}>Calendar Reserver</header>
       <div className={style.mainBody}>
         <div className={style.firstRow}>
@@ -85,7 +88,8 @@ function App() {
             <span className={style.reservationHeading}>Add reservation</span>
             <ConfirmStay
               dates={selectedUnreservedDates}
-              onConfirm={name => {
+              onConfirm={async name => {
+                setLoadStatus(true);
                 const reservations = selectedUnreservedDates.map(date => {
                   return {
                     tennantName: name,
@@ -93,14 +97,17 @@ function App() {
                     reserved: true,
                   };
                 });
-                return changeReservations(reservations)
-                  .then(res => {
-                    console.log(res);
-                    fetchReservations();
-                  })
-                  .catch(error => {
-                    console.log(error);
-                  });
+                try {
+                  setLoadStatus(true);
+                  const res = await changeReservations(reservations);
+                  console.log(res);
+                  await fetchReservations();
+                  setLoadStatus(false);
+                } catch (error) {
+                  console.log(error);
+                  setLoadStatus(false);
+                }
+                return;
               }}
             />
           </div>
@@ -110,17 +117,22 @@ function App() {
           <div className={style.cancelGrid}>
             {selectedReservations.map(({ tennantName, time }) => (
               <CancelStay
+                key={time}
                 date={time}
                 tennantName={tennantName}
-                onCancel={() => {
-                  changeReservations([{ tennantName, date: time, reserved: false }])
-                    .then(res => {
-                      console.log(res);
-                      fetchReservations();
-                    })
-                    .catch(error => {
-                      console.log(error);
-                    });
+                onCancel={async () => {
+                  try {
+                    setLoadStatus(true);
+                    const res = await changeReservations([
+                      { tennantName, date: time, reserved: false },
+                    ]);
+                    console.log(res);
+                    await fetchReservations();
+                    setLoadStatus(false);
+                  } catch (error) {
+                    console.log(error);
+                    setLoadStatus(false);
+                  }
                 }}
               />
             ))}
