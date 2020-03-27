@@ -55,7 +55,6 @@ function App() {
             await fetchReservations();
             setLoadStatus(false);
           } catch (error) {
-            console.log(error);
             setError(String(error));
           }
         }}
@@ -118,12 +117,10 @@ function App() {
                 });
                 try {
                   setLoadStatus(true);
-                  const res = await changeReservations(reservations);
-                  console.log(res);
+                  await changeReservations(reservations);
                   await fetchReservations();
                   setLoadStatus(false);
                 } catch (error) {
-                  console.log(error);
                   setLoadStatus(false);
                   setError(String(error));
                 }
@@ -143,14 +140,12 @@ function App() {
                 onCancel={async () => {
                   try {
                     setLoadStatus(true);
-                    const res = await changeReservations([
+                    await changeReservations([
                       { tennantName, date: time, reserved: false },
                     ]);
-                    console.log(res);
                     await fetchReservations();
                     setLoadStatus(false);
                   } catch (error) {
-                    console.log(error);
                     setLoadStatus(false);
                     setError(String(error));
                   }
