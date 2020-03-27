@@ -8,13 +8,15 @@ import { getReservations, changeReservations } from './utils/api';
 import { getStartOfMonth, getEndOfMonth } from './utils';
 import style from './App.module.css';
 
-const date = new Date();
-let startTime = getStartOfMonth(date);
-let endTime = getEndOfMonth(date);
+const nowDate = new Date();
+// These will be used as cursors for fetching reservations
+// We don't want to load reservations of the month, user hasn't navigated yet
+let startTime = getStartOfMonth(nowDate);
+let endTime = getEndOfMonth(nowDate);
 
 function App() {
   // This state takes care of currently showing month and year
-  const [currentMonth, setMonth] = useState(new Date());
+  const [currentMonth, setMonth] = useState(nowDate);
   const [selectedDates, setDates] = useState([]);
   const [reservations, setReservation] = useState([]);
   const [isLoading, setLoadStatus] = useState(false);
